@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+
+  <head>
+  
+    <title>Login</title>
+    <meta charset="utf-8"/>
+    
+    <style>
+      * {
+        font-family: sans-serif;
+        font-size: 14pt;
+      }
+      
+      #auth_container {
+        box-sizing: border-box;
+        max-width: 400px;
+        margin: auto;
+        background: lightgray;
+        border-radius: 5px;
+        padding: 0 2em;
+        overflow: auto;
+        text-align: center;
+      }
+      
+      #auth > * {
+        vertical-align: middle;
+        margin: 2.5em 0;
+      }
+      
+      #auth > input {
+        box-sizing: border-box;
+        border: 1px solid gray;
+        padding: 0.6em;
+        display: block;
+        border-radius: 5px;
+        width: 100%;
+      }
+      
+      #auth button > img {
+        height: 28px;
+      }
+      
+      #auth button > * {
+        vertical-align: middle;
+      }
+      
+      #mail_auth {
+        font-size: 0;
+      }
+      
+      .eatGoButton {
+        border: none;
+        display: inline-block;
+        width: calc(50% - 1em);
+        margin: 0 0.5em;
+        padding: 0.5em 1.5em;
+        border-radius: 5px;
+      }
+      
+      .thirdParty {
+        border-radius: 50%;
+        border: none;
+        margin: 0 0.5em;
+        padding: 0.5em;
+      }
+      
+      #facebook {
+        background: #3B5998;
+      }
+      
+      #google {
+        background: white;
+      }
+      
+      #twitter {
+        background: #1DA1F2;
+      }
+    </style>
+  
+  </head>
+
+  <body>
+    
+    <div id="auth_container">
+      <form id="auth">
+      
+        <input type="text" placeholder="User name" required="required"/>
+        <input type="password" placeholder="Password" required="required"/>
+        
+        <div id="mail_auth">
+          <button type="submit" class="eatGoButton">Sign In</button>
+          <button type="button" class="eatGoButton">Sign Up</button>
+        </div>
+        
+        <div>
+          <button type="button" id="facebook" class="thirdParty">
+            <img src="./images/facebook.svg"/>
+          </button>
+          <button type="button" id="google" class="thirdParty">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/768px-Google_%22G%22_Logo.svg.png"/>
+          </button>
+          <button type="button" id="twitter" class="thirdParty">
+            <img src="./images/twitter.svg"/>
+          </button>
+        </div>
+        
+      </form>
+    </div>
+    
+  </body>
+  
+</html>
