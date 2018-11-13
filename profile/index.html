@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* { font-family: sans-serif; font-size: 14pt; }
+p {font-size: 25pt; margin-top: 0;}
+#profileNav { width: 25%; height 100%;}
+#userProfile { width: 75%; height 100%; margin-left: 28%; }
+#account { margin-right 100px; width: 510px; display: none; }
+#creditCard{ width: 100; }
+#calorieCalculator { margin-right 100px; display: none;}
+#foodRecommendation { margin-right 100px;  }
+button,input, select {border-radius: 5px; padding: 0.6em; border: 1px solid gray;}
+.sidenav {
+    height: 100%; 
+    width: 0; 
+    position: fixed; 
+    z-index: 1; 
+    top: 0; 
+    left: 0;
+    background-color: Lightgray; 
+    overflow-x: hidden; 
+    transition: 0.5s; 
+	
+}
+.sidenav a {
+    padding: 32px 8px 32px 32px;
+    text-decoration: none;
+    font-size: 30px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+	border: 1px solid black;
+	border-radius: 5px;
+	text-align: center;
+	height: 33 %;
+	margin:8px;
+}
+.sidenav a:hover, .dropdown-btn:hover {
+  color: #f1f1f1;
+}
+
+</style>
+</head>
+<body>
+
+<div id="profileNav" class="sidenav">
+  <a href="#">User</br>Profile</a>
+  <a href="#">Calorie</br> Calculator</a>
+  <a href="#">Food</br> Recommendation</a>
+</div>
+<div id="userProfile">
+<div id="account">
+  <p>My account</p>
+<form action="./submit.html">
+  Full Name
+  </br>
+  <input type="text" id="name" name="name" placeholder="Enter Full Name" autofocus="autofocus"
+  pattern="[A-Za-z]{1,100}" required="required"/>
+  </br>
+  </br>
+  Phone Number
+  </br>
+  <input type="text" id="phone number" name="phone number" placeholder="Enter Phone Number" 
+  pattern="[A-Za-z]{8,20}" required="required"/>
+  </br>
+  </br>
+  E-mail
+  </br>
+  <input type="text" id="email" name="email" placeholder="Enter E-mail" 
+  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required="required"/>
+  </br>
+  </br>
+  Address
+  </br>
+  <input type="text" id="address" name="address" placeholder="Enter Address" 
+  pattern="[A-Za-z]{1,100}" required="required"/>
+  </br>
+  </br>
+  Birth Date
+  </br>
+  <input type="date" id="birthDate" name="birthDate"  required="required"/>
+  </br>
+  </br>
+  <input type="submit" id="submit" name="submit" value="Submit"/>
+  <input type="hidden" id="session" name="session"/>
+</form> 
+<div class ="creditCard">
+</br>
+</br>
+<p>Credit card</p>
+<div class="control-group">
+  <div class="row margin-bottom-md">
+  <div class="col-xs-12">
+  <input type="hidden" id="card_type" name="card_type">
+    <div class="form-group has-feedback">
+
+	<div>
+      <label class="control-label row no-gutters full-width text-sm margin-bottom-none" for="card_number">
+        <div class="col-xs-12">
+        Credit Card Number
+        </div>
+      </label>
+        <div class="input-group full-width">
+          <input class="form-control" data-fv-creditcard="true" data-fv-creditcard-message="The credit card number is not valid" data-fv-notempty="true" data-fv-notempty-message="Number is required" data-fv-phone="false" id="card_number" name="card_number" placeholder=" Enter Credit Card Number" type="tel" value="" data-fv-field="card_number">
+            </div><i class="form-control-feedback fv-bootstrap-icon-input-group" data-fv-icon-for="card_number" style="display: none;"></i>
+        </div>
+    <small class="help-block" data-fv-validator="creditCard" data-fv-for="card_number" data-fv-result="NOT_VALIDATED" style="display: none;">The credit card number is not valid</small><small class="help-block" data-fv-validator="notEmpty" data-fv-for="card_number" data-fv-result="NOT_VALIDATED" style="display: none;">Number is required</small></div>
+      </div>
+        </div>
+      <div class="row margin-bottom-md">
+        <div class="col-xs-12 col-md-6">
+          <div class="form-group">
+			<div>
+            <label class="control-label row no-gutters full-width text-sm margin-bottom-none" for="expiration_month">
+        <div class="col-xs-12">
+		    </br>
+            Expiry Month
+        </div>
+    </label>
+            <div class="input-group full-width styled-select-container">
+                <select class="form-control" data-fv-notempty="true" data-fv-notempty-message="Expiry Month is required" id="expiration_month" name="expiration_month" placeholder="Select A Month" data-fv-field="expiration_month"><option value="">Month</option><option value="1">01 - Jan</option><option value="2">02 - Feb</option><option value="3">03 - Mar</option><option value="4">04 - Apr</option><option value="5">05 - May</option><option value="6">06 - Jun</option><option value="7">07 - Jul</option><option value="8">08 - Aug</option><option value="9">09 - Sep</option><option value="10">10 - Oct</option><option value="11">11 - Nov</option><option value="12">12 - Dec</option></select>
+                 <i class="ion-icon ion-arrow-down-b ion-xs"></i>
+              </div>
+		    <div>
+    <small class="help-block" data-fv-validator="notEmpty" data-fv-for="expiration_month" data-fv-result="NOT_VALIDATED" style="display: none;">Expiry Month is required</small></div>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                    <div class="form-group">
+        <div>
+    <label class="control-label row no-gutters full-width text-sm margin-bottom-none" for="expiration_year">
+        <div class="col-xs-12">
+		    </br>
+            Expiry Year
+        </div>
+     </label>
+         <div class="input-group full-width styled-select-container">
+                <select class="form-control" data-fv-notempty="true" data-fv-notempty-message="Year is required" id="expiration_year" name="expiration_year" placeholder="Select A Year" data-fv-field="expiration_year"><option value="">Year</option><option value="2018">2018</option><option value="2019">2019</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option></select>
+                <i class="ion-icon ion-arrow-down-b ion-xs"></i>
+            </div>
+			</div>
+    <small class="help-block" data-fv-validator="notEmpty" data-fv-for="expiration_year" data-fv-result="NOT_VALIDATED" style="display: none;">Year is required</small></div>
+                        </div>
+                    </div>
+                    <div class="control-group ">
+        <div class="controls">
+		    </br>
+            <button id="Save Card" type="submit" class="btn btn-primary btn-lg btn-rounded full-width">
+                <i class="ion-icon ion-ion-load-c ion-submit-spinner ion-spin hidden"></i> Add Credit Card
+            </button>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div id="calorieCalculator">
+<p>Calorie Calulator</p>
+ <div id="metric_form_container" class="hidden"> 
+ <form name="metric"> 
+ <div class="row"> 
+ <div class="fi_sel"> 
+ <label>Gender</label>
+</br> 
+ <select id="gender_m">
+ <option value="f">Female</option>
+ <option value="m">Male</option>
+ </select> </div> 
+ <div class="fi_txt"> 
+ </br>
+ <label>Age</label> 
+ </br>
+ <input type="number" step="1" min="0" id="age_m" placeholder=" Enter Years"> 
+ </div> 
+ </div> 
+ <div class="row"> 
+ <div class="fi_txt">
+</br> 
+ <label>Height</label> 
+ </br>
+ <input type="number" step="0.1" min="0" id="height_m" placeholder="Enter Centimeters"> 
+ </div>
+ <div class="fi_txt">
+ </br>
+ <label>Weight</label>
+ </br>
+ <input type="number" step="0.1" min="0" id="weight_m" placeholder="Enter Kilograms"> 
+ </div> </div> <div class="fi_sel"> 
+ </br>
+ <label>Activity</label>
+ </br>
+ <select id="lifestyle_m">
+ <option value="">— Select from the dropdown —</option>
+ <option value="sedentary">Sedentary lifestyle</option>
+ <option value="slightly_active">Slightly active</option>
+ <option value="moderately_active">Moderately active</option>
+ <option value="active">Active lifestyle</option>
+ <option value="very_active">Very active lifestyle</option>
+ </select>
+ </div>
+ <div class="fi_btn">
+ </br>
+ <input type="submit" value="Calculate">
+ </div>
+ </form>
+ </div>
+ <div> 
+ </br>
+ <label>Maintain Weight</label> 
+ <output form="maintainWeight" name="a" for="a b"></output> 
+ </div>
+ <div> 
+ </br>
+ <label>Lose Weight</label> 
+ <output form="loseWeight" name="a" for="a b"></output>
+ </div>
+ <div> 
+ </br>
+ <label>Lose Weight Fast</label> 
+ <output form="loseWeightFast" name="a" for="a b"></output>
+ </div>
+ </div>
+ 
+
+
+<div id="foodRecommendation">
+<p>Food Recommendation</p>
+Dietary Concerns
+</br>
+<select>
+  <option value="">— Select from the dropdown —</option>
+  <option value="student">Student</option>
+  <option value="athlete">Athlete</option>
+  <option value="vegatarian">Vegatarian</option>
+</select>
+</br>
+</br>
+<input type="submit" value="Recommend">
+</div>
+
+
+</body>
+</html>
