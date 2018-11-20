@@ -6,6 +6,8 @@
     <title>Menu</title>
     <meta charset="utf-8"/>
     
+    <link rel="stylesheet" href="css/nav_bar.css"/>
+    
     <style>
       * {
         font-family: sans-serif;
@@ -14,40 +16,6 @@
       
       body {
         margin: 0;
-      }
-      
-      #nav_bar {
-        display: table;
-        width: 100%;
-        height: 4em;
-        background: lightgray;
-      }
-      
-      #nav_bar > * {
-        display: table-cell;
-        vertical-align: middle;
-        text-align: center;
-      }
-      
-      #nav_bar > div {
-        width: 15%;
-      }
-      
-      #nav_bar > h1 {
-        font-size: 28pt;
-      }
-      
-      #nav_bar a {
-        width: 100%;
-        border: none;
-        font-size: 21pt;
-        text-decoration: none;
-        color: black;
-      }
-      
-      #nav_bar a > img {
-        height: 56px;
-        vertical-align: middle;
       }
       
       #home {
@@ -187,21 +155,6 @@
       <img src="https://material.io/tools/icons/static/icons/baseline-thumb_up-24px.svg"/>
     </button>
     
-    <div id="nav_bar">
-      <div id="home">
-        <a type="button" title="Home" href="../">
-          <img src="https://material.io/tools/icons/static/icons/baseline-home-24px.svg"/>
-        </a>
-      </div>
-      <h1>Eat GO</h1>
-      <div id="account">
-        <a href="../sign_in/">
-          <img src="https://material.io/tools/icons/static/icons/baseline-account_circle-24px.svg"/>
-          Login
-        </a>
-      </div>
-    </div>
-    
     <div id="locator">
     
       <div id="res_container">
@@ -249,6 +202,9 @@
       </div>
       
     </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="js/nav_bar.js"></script>
     
   </body>
   
