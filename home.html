@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+
+  <head>
+  
+    <title>Home Page</title>
+    <meta charset="utf-8"/>
+    
+    <link rel="stylesheet" href="css/nav_bar.css"/>
+    
+    <style>
+      * {
+        font-family: sans-serif;
+        font-size: 14pt;
+      }
+      
+      #nav_bar {
+        position: fixed;
+        z-index: 1;
+      }
+      
+      body {
+        margin: 0;
+        background: black;
+      }
+      
+      #search_container {
+      position: relative;
+        height: 100vh;
+        background-image: url("images/background1.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: background 1s linear;
+      }
+      
+      #blackend {
+        position: absolute;
+        background: rgba(0, 0, 0, 0.6);
+        width: 100%;
+        height: 100%;
+      }
+      
+      #search {
+        position: relative;
+        text-align: center;
+        top: 50%;
+        transform: translate(0, -50%);
+      }
+      
+      #search > * {
+        vertical-align: middle;
+        border-radius: 5px;
+      }
+      
+      #search > button {
+        border: none;
+        padding: 0.5em 1.5em;
+        background: #81c784;
+      }
+      
+      #search > button > img {
+        height: 28px;
+      }
+      
+      #search > button > * {
+        vertical-align: middle;
+      }
+      
+      #search > input {
+        border: 1px solid gray;
+        padding: 0.6em;
+        width: 30%;
+      }
+    </style>
+  
+  </head>
+
+  <body>
+  
+    <div id="search_container">
+      <div id="blackend"></div>
+      <form id="search" name="search" onsubmit="return searchWithString()">
+        <input id="search_field" type="text" placeholder="Enter delivery address" required="required"/>
+        <button type="submit" title="Search">
+          <img src="https://material.io/tools/icons/static/icons/baseline-search-24px.svg"/>
+        </button>
+        <button type="button" title="Use current location" onclick="searchWithCurrentLocation()">
+          <img src="https://material.io/tools/icons/static/icons/baseline-my_location-24px.svg"/>
+        </button>
+      </form>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="js/nav_bar.js"></script>
+    <script>
+      var searchWithString = function() {
+        window.location.href = "locator.html?search=" + $("#search_field").val();
+        return false;
+      };
+      
+      var searchWithCurrentLocation = function () {
+        console.log("asdfsadf");
+        if ("geolocation" in navigator){
+          navigator.geolocation.getCurrentPosition(function(position){
+            window.location.href = "locator.html?x=" + position.coords.latitude + "&y=" + position.coords.longitude;
+          });
+        }else{
+          alert("Geolocation is not available on your browser or device!")
+        }
+      }
+      
+      var currentBckgndIndex = 0;
+      setInterval(function () {
+        let bckgndIndex = Math.floor((Math.random() * 4));
+        
+        while (bckgndIndex == currentBckgndIndex) {
+          bckgndIndex = Math.floor((Math.random() * 4));
+        }
+        
+        currentBckgndIndex = bckgndIndex;
+        bckgndIndex = "url('images/background" + bckgndIndex + ".jpg')";
+        
+        $("#search_container").css("background-image", bckgndIndex);
+      }, 10000);
+    </script>
+  
+  </body>
+  
+</html>

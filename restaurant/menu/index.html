@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+
+  <head>
+  
+    <title>Menu</title>
+    <meta charset="utf-8"/>
+    
+    <style>
+      * {
+        font-family: sans-serif;
+        font-size: 14pt;
+      }
+      
+      #cart {
+        position: fixed;
+        bottom: 2em;
+        right: 2em;
+        padding: 0.9em;
+        border-radius: 50%;
+        border: none;
+      }
+      
+      #cart > img {
+        height: 42px;
+        vertical-align: middle;
+      }
+      
+      #menu_container {
+        box-sizing: border-box;
+        max-width: 800px;
+        margin: auto;
+        background: lightgray;
+        padding: 0 2em;
+      }
+    
+      #res_name {
+        font-size: 28pt;
+        text-align: center;
+        padding: 1em;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      }
+      
+      .menu {
+        margin: 2em 0;
+      }
+      
+      .menu > h3 {
+        font-size: 21pt;
+        font-weight: normal;
+      }
+      
+      .foodList {
+        width: 100%;
+        display: table;
+      }
+      
+      .foodItem {
+        display: table-row;
+      }
+      
+      .foodItem > * {
+        vertical-align: middle;
+        display: table-cell;
+      }
+      
+      .foodPhoto {
+        width: 100px;
+      }
+      
+      .foodPhoto > img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+      }
+      
+      .foodName {
+        padding: 0 2em;
+      }
+      
+      .foodName p {
+        color: rgba(0, 0, 0, 0.67);
+      }
+      
+      .quantity {
+        text-align: right;
+      }
+      
+      .quantity > input {
+        padding: 0.6em;
+        width: 50px;
+        border-radius: 5px;
+        border: 1px solid gray;
+      }
+      
+      .divider {
+        margin-left: calc(100px + 2em);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      }
+    </style>
+  
+  </head>
+  
+  <body>
+  
+    <button id="cart" type="button">
+      <img src="https://material.io/tools/icons/static/icons/baseline-shopping_cart-24px.svg"/>
+    </button>
+  
+    <div id="menu_container">
+    
+      <h2 id="res_name">Restaurant name</h2>
+      
+      <div class="menu">
+        <h3>Menu #1</h3>
+        
+        <div class="foodList">
+          <div class="foodItem">
+          
+            <div class="foodPhoto">
+              <img src="https://dummyimage.com/100/000/fff"/>
+            </div>
+            <div class="foodName">
+              <details>
+                <summary>Food #1</summary>
+                <p>Ingredients: something, something, something, something, and something</p>
+                <p>Nutrition facts: something, something, something, something, and something</p>
+              </details>
+            </div>
+            <div class="quantity">
+              <input type="number" value="0" min="0"/>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      
+      <div class="divider"></div>
+    
+    </div>
+    
+  </body>
+  
+</html>
