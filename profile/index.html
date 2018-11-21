@@ -6,10 +6,10 @@
 p {font-size: 25pt; margin-top: 0;}
 #profileNav { width: 25%; height 100%;}
 #userProfile { width: 75%; height 100%; margin-left: 28%; }
-#account { margin-right 100px; width: 510px; display: none; }
+#account { margin-right 100px; width: 510px;  }
 #creditCard{ width: 100; }
-#calorieCalculator { margin-right 100px; display: none;}
-#foodRecommendation { margin-right 100px;  }
+#calorieCalculator { margin-right 100px; width: 510px; display: none;}
+#foodRecommendation { margin-right 100px; width: 510px; display: none;}
 button,input, select {border-radius: 5px; padding: 0.6em; border: 1px solid gray;}
 .sidenav {
     height: 100%; 
@@ -23,8 +23,9 @@ button,input, select {border-radius: 5px; padding: 0.6em; border: 1px solid gray
     transition: 0.5s; 
 	
 }
-.sidenav a {
+.sidenav button {
     padding: 32px 8px 32px 32px;
+	width: 95%;
     text-decoration: none;
     font-size: 30px;
     color: white;
@@ -36,7 +37,7 @@ button,input, select {border-radius: 5px; padding: 0.6em; border: 1px solid gray
 	height: 33 %;
 	margin:8px;
 }
-.sidenav a:hover, .dropdown-btn:hover {
+.sidenav button:hover, .dropdown-btn:hover {
   color: #f1f1f1;
 }
 
@@ -44,10 +45,11 @@ button,input, select {border-radius: 5px; padding: 0.6em; border: 1px solid gray
 </head>
 <body>
 
+
 <div id="profileNav" class="sidenav">
-  <a href="#">User</br>Profile</a>
-  <a href="#">Calorie</br> Calculator</a>
-  <a href="#">Food</br> Recommendation</a>
+  <button id ="accountButton">User</br>Profile</a>
+  <button id ="calorieCalculatorButton">Calorie</br> Calculator</a>
+  <button id ="foodRecommendationButton">Food</br> Recommendation</a>
 </div>
 <div id="userProfile">
 <div id="account">
@@ -242,6 +244,111 @@ Dietary Concerns
 <input type="submit" value="Recommend">
 </div>
 
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script>
+    /*<![CDATA[*/
+        $(document).ready(function() {
 
+          $("#accountButton").click(function(){
+		      $('#accountButton').css('background', 'black');
+			  $('#calorieCalculatorButton').css('background', 'lightgray');
+			  $('#foodRecommendationButton').css('background', 'lightgray');
+              $("#account").show();
+			  $("#calorieCalculator").hide();
+			  $("#foodRecommendation").hide();
+          });
+          $("#calorieCalculatorButton").click(function(){
+		      $('#accountButton').css('background', 'lightgray');
+			  $('#calorieCalculatorButton').css('background', 'black');
+			  $('#foodRecommendationButton').css('background', 'lightgray');
+              $("#account").hide();
+			  $("#calorieCalculator").show();
+			  $("#foodRecommendation").hide();
+          });
+		  $("#foodRecommendationButton").click(function(){
+		      $('#accountButton').css('background', 'lightgray');
+			  $('#calorieCalculatorButton').css('background', 'lightgray');
+		      $('#foodRecommendationButton').css('background', 'black');
+              $("#account").hide();
+			  $("#calorieCalculator").hide();
+			  $("#foodRecommendation").show();
+          });
+        });
+document.metric.onsubmit = function() {
+      var weight = parseFloat(document.getElementById("weight_m").value);
+      var height = parseFloat(document.getElementById("height_m").value);
+      var age = document.getElementById("age_m").value;
+      var gender = document.getElementById("gender_m").value;
+      var lifestyle = document.getElementById("lifestyle_m").value;
+      var result_div = document.getElementById("results");
+      result_div.className = "";
+      if (height && age && weight) {
+          var bmi = CalculateBMR(weight, height, age, gender, lifestyle);
+          if (!isNaN(bmi)) {
+              result_div.innerHTML = "<div>Maintain Weight: <span>" + Math.round(bmi) + "</span></div>";
+              if (bmi < 1000 || (bmi * 0.8) < 1000 || (bmi * 0.6) < 1000) {
+                  if (bmi < 1000) {
+                      bmi = 1000;
+                  } else {
+                      bmi = Math.round(bmi);
+                  }
+                  if ((bmi * 0.8) < 1000) {
+                      var loseweight = 1000;
+                  } else {
+                      loseweight = Math.round(bmi * 0.8);
+                  }
+                  if ((bmi * 0.6) < 1000) {
+                      var loseweightfast = 1000;
+                  } else {
+                      loseweightfast = Math.round(bmi * 0.6);
+                  }
+                  result_div.innerHTML = "<div>Maintain Weight: <span>" + bmi + "</span></div>";
+                  result_div.innerHTML = result_div.innerHTML + "<div>Lose Weight: <span>" + loseweight + "</span></div>";
+                  result_div.innerHTML = result_div.innerHTML + "<div>Lose Weight Fast: <span>" + loseweightfast + "</span></div>";
+                  result_div.innerHTML = result_div.innerHTML + "<div style='font-size:14px;'>This calculator will never show a number below 1000 calories per day. If you think you need to eat less than that, then please talk to a qualified health professional first.</div>";
+              } else {
+                  loseweight = Math.round(bmi * 0.8);
+                  loseweightfast = Math.round(bmi * 0.6);
+                  result_div.innerHTML = result_div.innerHTML + "<div>Lose Weight: <span>" + loseweight + "</span></div>";
+                  result_div.innerHTML = result_div.innerHTML + "<div>Lose Weight Fast: <span>" + loseweightfast + "</span></div>";
+              }
+          } else {
+              result_div.innerHTML = "<div style='font-size:20px;'>Error: Data is invalid</div>";
+          }
+      } else {
+          result_div.innerHTML = "<div style='font-size:20px;'>Error: Fields can not be left empty</div>";
+      }
+      return false;
+  };
+  function CalculateBMR(weight, height, age, gender, lifestyle) {
+      if (gender == 'm') {
+          var s = 5;
+      } else if (gender == 'f') {
+          var s = -161;
+      } else {
+          var s = '';
+      }
+      var bmr = (10 * weight) + (6.25 * height) - (5 * age) + s;
+      if (lifestyle == 'sedentary') {
+          bmr = bmr * 1.2;
+      } else if (lifestyle == 'slightly_active') {
+          bmr = bmr * 1.375;
+      } else if (lifestyle == 'moderately_active') {
+          bmr = bmr * 1.55;
+      } else if (lifestyle == 'active') {
+          bmr = bmr * 1.725;
+      } else if (lifestyle == 'very_active') {
+          bmr = bmr * 1.9;
+      } else if (lifestyle == '') {
+          bmr = bmr;
+      }
+      return bmr;
+  }
+    /*]]>*/
+	
+    </script>
 </body>
 </html>
