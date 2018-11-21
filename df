@@ -1,0 +1,111 @@
+[33mcommit ac97ce2ebff60f6ffb9bdfa5005bc485804f44fe[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Merge: d4a0a1e 3165ce5
+Author: Do Young Lee <ehdudblue@gmail.com>
+Date:   Tue Nov 20 17:14:27 2018 -0800
+
+    Merge branch 'master' of https://github.com/Robert483/Eat-GO
+
+[33mcommit d4a0a1e792ce7edbd7b1fa4a7743d4a4449d0fd8[m
+Author: Do Young Lee <ehdudblue@gmail.com>
+Date:   Tue Nov 20 17:11:34 2018 -0800
+
+    made changes
+
+[33mcommit 3165ce53b352fff88597ce795d9742ab252641fc[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Phuc Vu (Robert) <robertvu483@gmail.com>
+Date:   Tue Nov 20 17:04:14 2018 -0800
+
+    added pop up in locater.html
+
+[33mcommit 525b247d2931ec6262aa22dc61b01b1b25bfd957[m
+Merge: a451173 c449ccd
+Author: Phuc Vu (Robert) <robertvu483@gmail.com>
+Date:   Tue Nov 20 16:25:47 2018 -0800
+
+    Merge branch 'master' of https://github.com/Robert483/Eat-GO
+
+[33mcommit a4511730375296e04b41408d4c709550dbf28f5f[m
+Author: Phuc Vu (Robert) <robertvu483@gmail.com>
+Date:   Tue Nov 20 16:25:43 2018 -0800
+
+    Added background and color to a few pages
+
+[33mcommit c449ccd36c7d063c45ef92254d8f3d470a8f2f9a[m
+Author: Byron Hobbs <millenniumtechnical@hotmail.com>
+Date:   Tue Nov 20 14:28:02 2018 -0800
+
+    adding index.html with sidenav functionality
+
+[33mcommit ee54e4f16f9563b53720ad7276f485e163021f1c[m
+Author: Phuc Vu (Robert) <robertvu483@gmail.com>
+Date:   Tue Nov 20 14:17:31 2018 -0800
+
+    Changed folder structure and add navigation bar
+
+[33mcommit 9a9611150e20ee9c19888730efe6c75d9880a2de[m
+Merge: 1fcd455 9ee7a5c
+Author: Phuc Vu (Robert) <robertvu483@gmail.com>
+Date:   Mon Nov 12 20:02:54 2018 -0800
+
+    Merge branch 'master' of https://github.com/Robert483/Eat-GO
+
+[33mcommit 1fcd4555dbf464d55de570624f523245d135462a[m
+Author: Phuc Vu (Robert) <robertvu483@gmail.com>
+Date:   Mon Nov 12 20:02:51 2018 -0800
+
+    Made restaurant locator page
+
+[33mcommit 9ee7a5caf39af121e0239db3b89ae11e399718ff[m
+Merge: 7962763 2e775e0
+Author: Do Young Lee <ehdudblue@gmail.com>
+Date:   Mon Nov 12 17:28:11 2018 -0800
+
+    Merge branch 'master' of https://github.com/Robert483/Eat-GO
+
+[33mcommit 79627639628299afebba40c9795cc77c1c1c0357[m
+Author: Do Young Lee <ehdudblue@gmail.com>
+Date:   Mon Nov 12 17:27:55 2018 -0800
+
+    created payment method page and order confirmation page
+
+[33mcommit 2e775e0e69a024c0941221ddd95f79870b1ee96b[m
+Author: Byron Hobbs <millenniumtechnical@hotmail.com>
+Date:   Mon Nov 12 17:20:16 2018 -0800
+
+    User Profile Added
+
+[33mcommit 41803d35f6ffa703778f488995eea7176595c190[m
+Author: Phuc Vu (Robert) <robertvu483@gmail.com>
+Date:   Mon Nov 12 16:10:49 2018 -0800
+
+    Made menu page
+
+[33mcommit 1da330958ecef528265d5edde9b6cac7114106ae[m
+Author: Do Young Lee <ehdudblue@gmail.com>
+Date:   Mon Nov 12 13:30:38 2018 -0800
+
+    create sign up page
+
+[33mcommit da01695f041055474351d42df0a2097d58f9e7a0[m
+Author: Phuc Vu (Robert) <robertvu483@gmail.com>
+Date:   Sun Nov 11 15:58:47 2018 -0800
+
+    Made login page
+
+[33mcommit d57363c580e1553f4970524977287d2865fa34f3[m
+Author: Phuc Vu (Robert) <robertvu483@gmail.com>
+Date:   Sun Nov 11 13:16:24 2018 -0800
+
+    Made homepage layout
+
+[33mcommit fe30ae1b392e14c3d7125b078817d3ab7fb8276e[m
+Author: Phuc Vu (Robert) <robertvu483@gmail.com>
+Date:   Thu Nov 8 18:04:09 2018 -0800
+
+    Created directories
+
+[33mcommit ca34f10250da1fad61959aa68598805cfbb5984e[m
+Author: Robert483 <43567328+Robert483@users.noreply.github.com>
+Date:   Thu Nov 8 17:37:25 2018 -0800
+
+    Initial commit
