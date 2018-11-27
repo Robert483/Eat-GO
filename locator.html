@@ -53,6 +53,19 @@
         box-shadow: 0 5px 0.5em;
       }
       
+      #res_info::-webkit-scrollbar-track {
+        background-color: white;
+      }
+
+      #res_info::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      #res_info::-webkit-scrollbar-thumb {
+        border-radius: 0.1em;
+        background-color: #519657;
+      }
+      
       #res_info > img {
         width: 100%;
         height: 200px;
@@ -131,25 +144,25 @@
         border-radius: 5px;
       }
       
-      #search > button {
+      .customButton {
         border: none;
         padding: 0.5em 1.5em;
         background: #81c784;
         box-shadow: 0 0.1em 0.3em;
       }
       
-      #search > button > img {
+      .customButton > img {
         height: 28px;
       }
       
-      #search > button > * {
+      .customButton > * {
         vertical-align: middle;
       }
       
-      #search > input {
+      .customInput {
         border: 1px solid gray;
         padding: 0.6em;
-        width: calc(100% - 5em - 28px) ;
+        width: calc(100% - 5em - 28px);
       }
       
       #pop_up {
@@ -161,27 +174,26 @@
       }
       
       #pop_up > div {
+        padding: 2em;
         position: relative;
         top: 20%;
-        height: 40%;
-        left: 30%;
         width: 40%;
+        margin: auto;
         background: white;
         border-radius: 1em;
         box-shadow: 0 5px 0.5em;
       }
       
-      #res_info::-webkit-scrollbar-track {
-        background-color: white;
+      #pop_up h3 {
+        margin: 0;
+        font-size: 21pt;
+        font-weight: normal;
       }
-
-      #res_info::-webkit-scrollbar {
-        width: 5px;
-      }
-
-      #res_info::-webkit-scrollbar-thumb {
-        border-radius: 0.1em;
-        background-color: #519657;
+      
+      #pop_up select {
+        margin: 1em 0;
+        width: auto;
+        border-radius: 5px;
       }
     </style>
   
@@ -195,6 +207,15 @@
     
     <div id="pop_up">
       <div>
+      
+        <h3>Please tell me who you are</h3>
+        <select class="customInput">
+          <option value="student">Student</option>
+          <option value="athlete">Athlete</option>
+          <option value="vegaterian">Vegaterian</option>
+        </select>
+        <br/>
+        <button id="pop_up_recommend" class="customButton" type="button">Recommend</button>
         
       </div>
     </div>
@@ -239,9 +260,9 @@
       </div>
       
       <div id="map">
-        <form id="search">
-          <input type="text" placeholder="Enter delivery address" required="required"/>
-          <button type="submit" title="Search">
+        <form id="search" onsubmit="return changeLocation()">
+          <input class="customInput" id="search_field" type="text" placeholder="Enter delivery address" required="required"/>
+          <button class="customButton" type="submit" title="Search">
             <img src="https://material.io/tools/icons/static/icons/baseline-search-24px.svg"/>
           </button>
         </form>
@@ -256,6 +277,14 @@
         $("#pop_up").fadeIn(500);
       };
       
+      var changeLocation = function() {
+        var url = window.location.href;
+        var urlSplit = url.split( "?" );
+        var obj = { Title: "Menu", Url: urlSplit[0] + "?search=" + $("#search_field").val()};
+        history.pushState(obj, "Menu", obj.Url);
+        return false;
+      }
+      
       $(document).ready(function(){
         $("#pop_up").click(function(event) {
           $("#pop_up").fadeOut(500);
@@ -265,7 +294,7 @@
           event.stopPropagation();
         });
         
-        $(".menuList > div").click(function(event) {
+        $(".menuList > div, #pop_up_recommend").click(function(event) {
           window.location.href = "menu.html";
         });
       });
