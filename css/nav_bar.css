@@ -23,7 +23,7 @@
 #nav_bar a {
   width: 100%;
   border: none;
-  font-size: 21pt;
+  font-size: 14pt;
   text-decoration: none;
   color: black;
 }
@@ -32,7 +32,7 @@
   height: 56px;
   vertical-align: middle;
 }
-      
+
 #home {
   padding: 0 1em;
   text-align: left;
@@ -40,4 +40,10 @@
 
 #account {
   border-left: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+#log_out {
+  width: 40px;
+  opacity: 0.5;
+  display: none;
 }
