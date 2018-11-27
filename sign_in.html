@@ -7,6 +7,7 @@
     <meta charset="utf-8"/>
     
     <link rel="stylesheet" href="css/nav_bar.css"/>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
     
     <style>
       * {
@@ -14,11 +15,20 @@
         font-size: 14pt;
       }
       
-      body {
-        margin: 0;
+      #account {
+        border: none;
       }
       
-      #auth_container {
+      #account > a {
+        display: none;
+      }
+      
+      body {
+        margin: 0;
+        background: lightgray;
+      }
+      
+      /*#auth_container {
         box-sizing: border-box;
         max-width: 400px;
         margin: auto;
@@ -81,6 +91,19 @@
       
       #twitter {
         background: #1DA1F2;
+      }*/
+      
+      #log_in {
+        margin: 5em;
+      }
+      
+      .mdl-button--raised.mdl-button--colored {
+        background: #81c784;
+        color: black;
+      }
+      
+      .firebaseui-textfield.mdl-textfield .firebaseui-label::after {
+        background: #81c784;
       }
     </style>
   
@@ -116,8 +139,29 @@
     
     <div id="log_in">
     
+    <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+    <script src="js/firebase_init.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="js/nav_bar.js"></script>
+    
+    <script>
+      // Initialize the FirebaseUI Widget using Firebase.
+      var ui = new firebaseui.auth.AuthUI(firebase.auth());
+      
+      ui.start('#log_in', {
+        callbacks: {
+          signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+            // User successfully signed in.
+            return true;
+          }
+        },
+        signInSuccessUrl: 'home.html',
+        signInOptions: [
+          firebase.auth.EmailAuthProvider.PROVIDER_ID
+        ]
+      });
+    </script>
     
   </body>
   
