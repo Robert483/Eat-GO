@@ -6,10 +6,17 @@
     <title>Menu</title>
     <meta charset="utf-8"/>
     
+    <link rel="stylesheet" href="css/nav_bar.css"/>
+    
     <style>
       * {
         font-family: sans-serif;
         font-size: 14pt;
+      }
+      
+      body {
+        margin: 0;
+        background: lightgray;
       }
       
       #cart {
@@ -19,6 +26,8 @@
         padding: 0.9em;
         border-radius: 50%;
         border: none;
+        background: #81c784;
+        box-shadow: 0 5px 0.5em;
       }
       
       #cart > img {
@@ -30,8 +39,10 @@
         box-sizing: border-box;
         max-width: 800px;
         margin: auto;
-        background: lightgray;
+        background: white;
         padding: 0 2em;
+        box-shadow: 0 5px 0.5em;
+        border-radius: 0.5em;
       }
     
       #res_name {
@@ -103,7 +114,7 @@
   
   <body>
   
-    <button id="cart" type="button">
+    <button id="cart" type="button" onclick="goToCart()">
       <img src="https://material.io/tools/icons/static/icons/baseline-shopping_cart-24px.svg"/>
     </button>
   
@@ -138,6 +149,15 @@
       <div class="divider"></div>
     
     </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="js/nav_bar.js"></script>
+    
+    <script>
+      var goToCart = function() {
+        window.location.href = "payment.html";
+      };
+    </script>
     
   </body>
   

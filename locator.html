@@ -59,14 +59,14 @@
         object-fit: cover;
       }
       
-      #res_info > div {
-        margin: 1em;
-      }
-      
       #res_info h3 {
-        margin: 0;
+        margin: 0.2em 1em;
         font-size: 21pt;
         font-weight: normal;
+      }
+      
+      #res_info p {
+        margin: 0.5em 1em;
       }
       
       #res_info p > img {
@@ -84,6 +84,16 @@
         width: 100%;
       }
       
+      .menuList > div {
+        padding: 0.2em 1em;
+        border-left: 3px solid white; 
+      }
+      
+      .menuList > div:hover {
+        background: #EEE;
+        border-left-color: #81c784;
+      }
+      
       .menuItem {
         display: table-row;
       }
@@ -97,6 +107,7 @@
       }
       
       .menuPhoto > img {
+        vertical-align: middle;
         width: 75px;
         height: 75px;
         object-fit: cover;
@@ -123,6 +134,8 @@
       #search > button {
         border: none;
         padding: 0.5em 1.5em;
+        background: #81c784;
+        box-shadow: 0 0.1em 0.3em;
       }
       
       #search > button > img {
@@ -156,6 +169,19 @@
         background: white;
         border-radius: 1em;
         box-shadow: 0 5px 0.5em;
+      }
+      
+      #res_info::-webkit-scrollbar-track {
+        background-color: white;
+      }
+
+      #res_info::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      #res_info::-webkit-scrollbar-thumb {
+        border-radius: 0.1em;
+        background-color: #519657;
       }
     </style>
   
@@ -198,11 +224,13 @@
             <div class="divider"></div>
             
             <div class="menuList">
-              <div class="menuItem">
-                <div class="menuPhoto">
-                  <img src="https://dummyimage.com/100/000/fff"/>
+              <div>
+                <div class="menuItem">
+                  <div class="menuPhoto">
+                    <img src="https://dummyimage.com/100/000/fff"/>
+                  </div>
+                  <div class="menuName">Menu #1</div>
                 </div>
-                <div class="menuName">Menu #1</div>
               </div>
             </div>
           
@@ -235,6 +263,10 @@
         
         $("#pop_up > div").click(function(event) {
           event.stopPropagation();
+        });
+        
+        $(".menuList > div").click(function(event) {
+          window.location.href = "menu.html";
         });
       });
     </script>
