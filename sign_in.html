@@ -155,33 +155,46 @@
       // Hold a reference to the anonymous current user.
       var anonymousUser = firebase.auth().currentUser;
       
-      ui.start('#log_in', {
-        callbacks: {
-          signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-            // User successfully signed in.
-            return true;
-          },
-          // Handle merge conflicts which occur when an existing credential is linked to an anonymous user.
-          signInFailure: function(error) {
-            // Check for merge conflicts
-            if (error.code != 'firebaseui/anonymous-upgrade-merge-conflict') {
-              return Promise.resolve();
+      $(document).ready(function(){
+        firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {
+            // User is signed in.
+            if (!user.isAnonymous) {
+              if (document.referrer.indexOf(location.protocol + "//" + location.host) === 0) {
+                window.location.href = document.referrer;
+              } else {
+                window.location.href = "home.html";
+              }
+            } else {
+              ui.start('#log_in', {
+                callbacks: {
+                  signInFailure: function(error) {
+                    // Check for merge conflicts
+                    if (error.code != 'firebaseui/anonymous-upgrade-merge-conflict') {
+                      return Promise.resolve();
+                    }
+                    
+                    // The credential the user tried to sign in with.
+                    var cred = error.credential;
+                    
+                    // Copy data from anonymous user to permanent user and delete anonymous user.
+                    
+                    // Finish sign-in after data is copied.
+                    return firebase.auth().signInWithCredential(cred);
+                  }
+                },
+                autoUpgradeAnonymousUsers: true,
+                signInSuccessUrl: 'home.html',
+                signInOptions: [
+                  firebase.auth.EmailAuthProvider.PROVIDER_ID
+                ]
+              });
             }
-            
-            // The credential the user tried to sign in with.
-            var cred = error.credential;
-            
-            // Copy data from anonymous user to permanent user and delete anonymous user.
-            
-            // Finish sign-in after data is copied.
-            return firebase.auth().signInWithCredential(cred);
+          } else {
+            // User is signed out.
+            firebase.auth().signInAnonymously();
           }
-        },
-        autoUpgradeAnonymousUsers: true,
-        signInSuccessUrl: 'home.html',
-        signInOptions: [
-          firebase.auth.EmailAuthProvider.PROVIDER_ID
-        ]
+        });
       });
     </script>
     
