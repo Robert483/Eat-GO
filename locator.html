@@ -325,17 +325,42 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
    
     <script>
+      var a = null;
       const searchProvider = new L.Control.Geocoder.Nominatim();
+        
+      const map = L.map('map', {
+        zoom: 15
+      });
+        
+      const currentMarker = L.marker([0, 0], {
+        draggable: true,
+        zIndexOffset: 3,
+        icon: L.icon({
+          iconUrl: 'images/current.png',
+          iconSize: [20, 20],
+          iconAnchor: [10, 10]
+        })
+      });
       
       var recommend = function() {
         $("#pop_up").fadeIn(500);
       };
       
       var changeLocation = function() {
-        let url = window.location.href;
-        let urlSplit = url.split( "?" );
-        let obj = { Title: "Menu", Url: urlSplit[0] + "?search=" + $("#search_field").val()};
-        history.pushState(obj, "Menu", obj.Url);
+        $("#loading").fadeIn(500);
+        
+        searchProvider.geocode($("#search_field").val(), function (result) {
+          if (result.length > 0) {
+            let coordinate = [result[0].center.lat, result[0].center.lng];
+              
+            $("#search_field").val(result[0].name);
+            map.setView(coordinate);
+            currentMarker.setLatLng(coordinate);
+          } else {
+            $("#loading").fadeOut(500);
+          }
+        });
+      
         return false;
       }
       
@@ -351,10 +376,6 @@
         $(".menuList > div, #pop_up_recommend").click(function(event) {
           window.location.href = "menu.html";
         });
-        
-        let map = L.map('map', {
-          zoom: 15
-        });
       
         L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
           attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
@@ -363,27 +384,34 @@
         }).addTo(map);
         
         map.zoomControl.setPosition('bottomleft');
+        
+        map.on('click', function (event) {
+          currentMarker.setLatLng(event.latlng);
+          searchProvider.reverse(event.latlng, map.getZoom(), function (result) {
+            $("#search_field").val(result[0].name);
+          });
+        });
+        
         map.on('moveend', function () {
           if ($("#loading").is(":visible")) {
             $("#loading").fadeOut(500);
           }
         });
+        
+        currentMarker.on('dragend', function (event) {
+          searchProvider.reverse(currentMarker.getLatLng(), map.getZoom(), function (result) {
+            $("#search_field").val(result[0].name);
+          });
+        });
 
         let locateControl = L.control.locate({
           position: "bottomleft",
           keepCurrentZoomLevel: true,
+          showPopup: false,
           locateOptions: {
             setView: true
           }
         }).addTo(map);
-        
-        let currentMarker = L.marker([0, 0], {
-          icon: L.icon({
-            iconUrl: 'images/current.png',
-            iconSize: [20, 20],
-            iconAnchor: [10, 10]
-          })
-        });
         
         let urlParams = new URLSearchParams(window.location.search);
         let x = urlParams.get("x");
