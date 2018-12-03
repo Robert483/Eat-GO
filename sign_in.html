@@ -146,16 +146,16 @@
     <script src="js/nav_bar.js"></script>
     
     <script>
-      // Initialize the FirebaseUI Widget using Firebase.
-      var ui = new firebaseui.auth.AuthUI(firebase.auth());
-      
-      // Temp variable to hold the anonymous user data if needed.
-      var data = null;
-      
-      // Hold a reference to the anonymous current user.
-      var anonymousUser = firebase.auth().currentUser;
-      
       $(document).ready(function(){
+        // Initialize the FirebaseUI Widget using Firebase.
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+        
+        // Temp variable to hold the anonymous user data if needed.
+        var data = null;
+        
+        // Hold a reference to the anonymous current user.
+        var anonymousUser = firebase.auth().currentUser;
+      
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
             // User is signed in.

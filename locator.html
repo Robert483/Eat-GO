@@ -7,6 +7,10 @@
     <meta charset="utf-8"/>
     
     <link rel="stylesheet" href="css/nav_bar.css"/>
+    <link rel="stylesheet" href="css/spinner.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
     
     <style>
       * {
@@ -27,6 +31,7 @@
         border: none;
         background: #81c784;
         box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+        z-index: 1;
       }
       
       #recommendation > img {
@@ -48,9 +53,11 @@
       }
       
       #res_info {
+        position: relative;
         height: calc(100vh - 4em);
         overflow: auto;
         box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+        z-index: 1;
       }
       
       #res_info::-webkit-scrollbar-track {
@@ -131,11 +138,35 @@
         padding: 1em;
       }
       
-      #map {
+      #map_container {
+        position: relative;
         vertical-align: top;
       }
       
+      #loading {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 2;
+        background: rgba(0, 0, 0, 0.5);
+      }
+      
+      #loading > div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        color: white;
+      }
+      
+      #map {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 0;
+      }
+      
       #search {
+        position: relative;
         margin: 1em;
       }
       
@@ -172,6 +203,7 @@
         width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0.5);
+        z-index: 2;
       }
       
       #pop_up > div {
@@ -195,6 +227,11 @@
         margin: 1em 0;
         width: auto;
         border-radius: 5px;
+      }
+      
+      /* Override style */
+      .leaflet-control-locate.active.following a, .leaflet-control-locate.active a {
+        color: #81c784;
       }
     </style>
   
@@ -260,7 +297,15 @@
         </div>
       </div>
       
-      <div id="map">
+      <div id="map_container">
+        <div id="loading">
+          <div>
+            <div class="infinity"></div>
+            <br/>
+            Loading
+          </div>
+        </div>
+        <div id="map"></div>
         <form id="search" onsubmit="return changeLocation()">
           <input class="customInput" id="search_field" type="text" placeholder="Enter delivery address" required="required"/>
           <button class="customButton" type="submit" title="Search">
@@ -275,15 +320,21 @@
     <script src="js/firebase_init.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="js/nav_bar.js"></script>
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+   
     <script>
+      const searchProvider = new L.Control.Geocoder.Nominatim();
+      
       var recommend = function() {
         $("#pop_up").fadeIn(500);
       };
       
       var changeLocation = function() {
-        var url = window.location.href;
-        var urlSplit = url.split( "?" );
-        var obj = { Title: "Menu", Url: urlSplit[0] + "?search=" + $("#search_field").val()};
+        let url = window.location.href;
+        let urlSplit = url.split( "?" );
+        let obj = { Title: "Menu", Url: urlSplit[0] + "?search=" + $("#search_field").val()};
         history.pushState(obj, "Menu", obj.Url);
         return false;
       }
@@ -300,6 +351,66 @@
         $(".menuList > div, #pop_up_recommend").click(function(event) {
           window.location.href = "menu.html";
         });
+        
+        let map = L.map('map', {
+          zoom: 15
+        });
+      
+        L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
+          attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
+          minZoom: 1,
+          maxZoom: 19
+        }).addTo(map);
+        
+        map.zoomControl.setPosition('bottomleft');
+        map.on('moveend', function () {
+          if ($("#loading").is(":visible")) {
+            $("#loading").fadeOut(500);
+          }
+        });
+
+        let locateControl = L.control.locate({
+          position: "bottomleft",
+          keepCurrentZoomLevel: true,
+          locateOptions: {
+            setView: true
+          }
+        }).addTo(map);
+        
+        let currentMarker = L.marker([0, 0], {
+          icon: L.icon({
+            iconUrl: 'images/current.png',
+            iconSize: [20, 20],
+            iconAnchor: [10, 10]
+          })
+        });
+        
+        let urlParams = new URLSearchParams(window.location.search);
+        let x = urlParams.get("x");
+        let y = urlParams.get("y");
+        
+        if (x != null && !isNaN(x) && y != null && !isNaN(y)) {
+          let coordinate = [parseFloat(x), parseFloat(y)];
+          
+          map.setView(coordinate);
+          currentMarker.setLatLng(coordinate);
+          currentMarker.addTo(map);
+        } else if (urlParams.get("search") != null) {
+          searchProvider.geocode(urlParams.get("search"), function (result) {
+            if (result.length > 0) {
+              let coordinate = [result[0].center.lat, result[0].center.lng];
+              
+              $("#search_field").val(result[0].name);
+              map.setView(coordinate);
+              currentMarker.setLatLng(coordinate);
+              currentMarker.addTo(map);
+            } else {
+              map.setView([0, 0], 1);
+            }
+          });
+        } else {
+          map.setView([0, 0], 1);
+        }
       });
     </script>
     
