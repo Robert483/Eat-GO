@@ -119,35 +119,7 @@
     </button>
   
     <div id="menu_container">
-    
-      <h2 id="res_name">Restaurant name</h2>
-      
-      <div class="menu">
-        <h3>Menu #1</h3>
-        
-        <div class="foodList">
-          <div class="foodItem">
-          
-            <div class="foodPhoto">
-              <img src="https://dummyimage.com/100/000/fff"/>
-            </div>
-            <div class="foodName">
-              <details>
-                <summary>Food #1</summary>
-                <p>Ingredients: something, something, something, something, and something</p>
-                <p>Nutrition facts: something, something, something, something, and something</p>
-              </details>
-            </div>
-            <div class="quantity">
-              <input type="number" value="0" min="0"/>
-            </div>
-            
-          </div>
-        </div>
-      </div>
-      
-      <div class="divider"></div>
-    
+      <h2 id="res_name"></h2>
     </div>
     
     <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
@@ -159,6 +131,75 @@
       var goToCart = function() {
         window.location.href = "payment.html";
       };
+      
+      $(document).ready(function (){
+        let urlParams = new URLSearchParams(window.location.search);
+        
+        if (urlParams.get("restaurant") != null) {
+          let i = 0;
+          let resId = urlParams.get("restaurant");
+          let dict = {};
+          
+          firebase.database().ref("restaurant/" + resId + "/name").on("value", function (snapshot) {
+            $("#res_name").text(snapshot.val());
+          });
+          
+          firebase.database().ref("menu/" + resId).on("child_added", function (snapshot) {
+            if (snapshot.exists()) {
+              dict[snapshot.key] = "#menu" + i;
+              
+              let elm = $("<div id='menu" + i + "' class='menu'> <h3>" + snapshot.key + "</h3> <div class='foodList'> " + createFood(snapshot.val(), dict[snapshot.key]) + "</div> </div> <div class='divider'></div>");
+              $("#menu_container").append(elm);
+              
+              elm.find(".quantity > input").on("input", function (event) {
+                let uid = firebase.auth().currentUser.uid;
+                firebase.database().ref("cart/" + uid + "/" + $(this).parent().prev().find("summary").text()).set(parseInt($(this).val()));
+              });
+              
+              if (window.location.hash != null && window.location.hash === dict[snapshot.key]) {
+                $('html, body').animate({
+                    scrollTop: $(window.location.hash).offset().top
+                }, 2000);
+              }
+              
+              i++;
+            } else {
+              window.location.href = "404.html";
+            }
+          });
+          
+          firebase.database().ref("menu/" + resId).on("child_changed", function (snapshot) {
+            let elm = $(dict[snapshot.key] + " .foodList").empty();
+            elm.append(createFood(snapshot.val(), dict[snapshot.key]));
+          });
+          
+          firebase.database().ref("menu/" + resId).on("child_removed", function (snapshot) {
+            let elm = $(dict[snapshot.key]);
+            elm.next().remove();
+            elm.remove();
+          });
+        } else {
+          window.location.href = "404.html";
+        }
+      });
+      
+      function createFood(data, selector) {
+        let result = "";
+        let keys = Object.keys(data);
+        let uid = firebase.auth().currentUser.uid;
+        
+        for (let i in keys) {
+          firebase.database().ref("cart/" + uid + "/" + keys[i]).once("value").then(function (snapshot) {
+            if (snapshot.exists()) {
+              $(selector + " .food" + i).val(snapshot.val());
+            }
+          });
+        
+          result += "<div class='foodItem'> <div class='foodPhoto'> <img src='" + data[keys[i]].image + "'/> </div> <div class='foodName'> <details> <summary>" + keys[i] + "</summary> <p>" + data[keys[i]].ingredients + "</p> </details> </div> <div class='quantity'> <input class='food" + i + "' type='number' value='0' min='0'/> </div> </div> ";
+        }
+        
+        return result;
+      }
     </script>
     
   </body>

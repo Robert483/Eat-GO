@@ -137,7 +137,7 @@
       </form>
     </div-->
     
-    <div id="log_in">
+    <div id="log_in"></div>
     
     <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
     <script src="js/firebase_init.js"></script>
@@ -148,22 +148,19 @@
     <script>
       $(document).ready(function(){
         // Initialize the FirebaseUI Widget using Firebase.
-        var ui = new firebaseui.auth.AuthUI(firebase.auth());
-        
-        // Temp variable to hold the anonymous user data if needed.
-        var data = null;
-        
-        // Hold a reference to the anonymous current user.
-        var anonymousUser = firebase.auth().currentUser;
+        let ui = new firebaseui.auth.AuthUI(firebase.auth());
+        let anonymousData = null;
       
-        firebase.auth().onAuthStateChanged(function(user) {
+        firebase.auth().onAuthStateChanged(function (user) {
           if (user) {
             // User is signed in.
             if (!user.isAnonymous) {
-              if (document.referrer.indexOf(location.protocol + "//" + location.host) === 0) {
-                window.location.href = document.referrer;
+              if (anonymousData != null) {
+                firebase.database().ref("cart/" + user.uid).update(anonymousData, function () {
+                  redirect();
+                });
               } else {
-                window.location.href = "home.html";
+                redirect();
               }
             } else {
               ui.start('#log_in', {
@@ -176,8 +173,15 @@
                     
                     // The credential the user tried to sign in with.
                     var cred = error.credential;
+                    console.log(error.credential);
                     
                     // Copy data from anonymous user to permanent user and delete anonymous user.
+                    firebase.database().ref("cart/" + user.uid).once('value').then(function (snapshot) {
+                      if (snapshot.exists()) {
+                        anonymousData = snapshot.val();
+                        firebase.database().ref("cart/" + user.uid).remove();
+                      }
+                    });
                     
                     // Finish sign-in after data is copied.
                     return firebase.auth().signInWithCredential(cred);
@@ -196,6 +200,14 @@
           }
         });
       });
+      
+      function redirect() {
+        if (document.referrer.split('/')[2] === window.location.host) {
+          history.go(-1);
+        } else {
+          window.location.href = "home.html";
+        }
+      }
     </script>
     
   </body>
