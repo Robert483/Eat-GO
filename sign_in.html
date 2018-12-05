@@ -8,110 +8,14 @@
     
     <link rel="stylesheet" href="css/nav_bar.css"/>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
-    
-    <style>
-      * {
-        font-family: sans-serif;
-        font-size: 14pt;
-      }
-      
-      #account {
-        border: none;
-      }
-      
-      #account > a {
-        display: none;
-      }
-      
-      body {
-        margin: 0;
-        background: lightgray;
-      }
-      
-      /*#auth_container {
-        box-sizing: border-box;
-        max-width: 400px;
-        margin: auto;
-        background: lightgray;
-        border-radius: 5px;
-        padding: 0 2em;
-        overflow: auto;
-        text-align: center;
-      }
-      
-      #auth > * {
-        vertical-align: middle;
-        margin: 2.5em 0;
-      }
-      
-      #auth > input {
-        box-sizing: border-box;
-        border: 1px solid gray;
-        padding: 0.6em;
-        display: block;
-        border-radius: 5px;
-        width: 100%;
-      }
-      
-      #auth button > img {
-        height: 28px;
-      }
-      
-      #auth button > * {
-        vertical-align: middle;
-      }
-      
-      #mail_auth {
-        font-size: 0;
-      }
-      
-      .eatGoButton {
-        border: none;
-        display: inline-block;
-        width: calc(50% - 1em);
-        margin: 0 0.5em;
-        padding: 0.5em 1.5em;
-        border-radius: 5px;
-      }
-      
-      .thirdParty {
-        border-radius: 50%;
-        border: none;
-        margin: 0 0.5em;
-        padding: 0.5em;
-      }
-      
-      #facebook {
-        background: #3B5998;
-      }
-      
-      #google {
-        background: white;
-      }
-      
-      #twitter {
-        background: #1DA1F2;
-      }*/
-      
-      #log_in {
-        margin: 5em;
-      }
-      
-      .mdl-button--raised.mdl-button--colored {
-        background: #81c784;
-        color: black;
-      }
-      
-      .firebaseui-textfield.mdl-textfield .firebaseui-label::after {
-        background: #81c784;
-      }
-    </style>
+    <link rel="stylesheet" href="css/sign_in.css"/>
   
   </head>
 
   <body>
     
-    <!--div id="auth_container">
+    <!-- Old layout
+    <div id="auth_container">
       <form id="auth">
       
         <input type="text" placeholder="User name" required="required"/>
@@ -144,71 +48,7 @@
     <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="js/nav_bar.js"></script>
-    
-    <script>
-      $(document).ready(function(){
-        // Initialize the FirebaseUI Widget using Firebase.
-        let ui = new firebaseui.auth.AuthUI(firebase.auth());
-        let anonymousData = null;
-      
-        firebase.auth().onAuthStateChanged(function (user) {
-          if (user) {
-            // User is signed in.
-            if (!user.isAnonymous) {
-              if (anonymousData != null) {
-                firebase.database().ref("cart/" + user.uid).update(anonymousData, function () {
-                  redirect();
-                });
-              } else {
-                redirect();
-              }
-            } else {
-              ui.start('#log_in', {
-                callbacks: {
-                  signInFailure: function(error) {
-                    // Check for merge conflicts
-                    if (error.code != 'firebaseui/anonymous-upgrade-merge-conflict') {
-                      return Promise.resolve();
-                    }
-                    
-                    // The credential the user tried to sign in with.
-                    var cred = error.credential;
-                    console.log(error.credential);
-                    
-                    // Copy data from anonymous user to permanent user and delete anonymous user.
-                    firebase.database().ref("cart/" + user.uid).once('value').then(function (snapshot) {
-                      if (snapshot.exists()) {
-                        anonymousData = snapshot.val();
-                        firebase.database().ref("cart/" + user.uid).remove();
-                      }
-                    });
-                    
-                    // Finish sign-in after data is copied.
-                    return firebase.auth().signInWithCredential(cred);
-                  }
-                },
-                autoUpgradeAnonymousUsers: true,
-                signInSuccessUrl: 'home.html',
-                signInOptions: [
-                  firebase.auth.EmailAuthProvider.PROVIDER_ID
-                ]
-              });
-            }
-          } else {
-            // User is signed out.
-            firebase.auth().signInAnonymously();
-          }
-        });
-      });
-      
-      function redirect() {
-        if (document.referrer.split('/')[2] === window.location.host) {
-          history.go(-1);
-        } else {
-          window.location.href = "home.html";
-        }
-      }
-    </script>
+    <script src="js/sign_in.js"></script>
     
   </body>
   

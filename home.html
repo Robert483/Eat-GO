@@ -7,77 +7,7 @@
     <meta charset="utf-8"/>
     
     <link rel="stylesheet" href="css/nav_bar.css"/>
-    
-    <style>
-      * {
-        font-family: sans-serif;
-        font-size: 14pt;
-      }
-      
-      #home > a {
-        display: none;
-      }
-      
-      #nav_bar {
-        position: fixed;
-        z-index: 1;
-      }
-      
-      body {
-        margin: 0;
-        background: black;
-      }
-      
-      #search_container {
-        position: relative;
-        height: 100vh;
-        background-image: url("images/background1.jpg");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        transition: background 1s linear;
-      }
-      
-      #blackend {
-        position: absolute;
-        background: rgba(0, 0, 0, 0.6);
-        width: 100%;
-        height: 100%;
-      }
-      
-      #search {
-        position: relative;
-        text-align: center;
-        top: 50%;
-        transform: translate(0, -50%);
-      }
-      
-      #search > * {
-        vertical-align: middle;
-        border-radius: 3px;
-      }
-      
-      #search > button {
-        border: none;
-        padding: 0.5em 1.5em;
-        background: #81c784;
-        box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
-      }
-      
-      #search > button > img {
-        height: 28px;
-      }
-      
-      #search > button > * {
-        vertical-align: middle;
-      }
-      
-      #search > input {
-        border: 1px solid gray;
-        padding: 0.6em;
-        width: 30%;
-      }
-    </style>
+    <link rel="stylesheet" href="css/home.css"/>
   
   </head>
 
@@ -100,37 +30,7 @@
     <script src="js/firebase_init.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="js/nav_bar.js"></script>
-    <script>
-      var searchWithString = function() {
-        window.location.href = "locator.html?search=" + $("#search_field").val();
-        return false;
-      };
-      
-      var searchWithCurrentLocation = function () {
-        console.log("asdfsadf");
-        if ("geolocation" in navigator){
-          navigator.geolocation.getCurrentPosition(function(position){
-            window.location.href = "locator.html?x=" + position.coords.latitude + "&y=" + position.coords.longitude;
-          });
-        }else{
-          alert("Geolocation is not available on your browser or device!")
-        }
-      }
-      
-      var currentBckgndIndex = 0;
-      setInterval(function () {
-        let bckgndIndex = Math.floor((Math.random() * 4));
-        
-        while (bckgndIndex == currentBckgndIndex) {
-          bckgndIndex = Math.floor((Math.random() * 4));
-        }
-        
-        currentBckgndIndex = bckgndIndex;
-        bckgndIndex = "url('images/background" + bckgndIndex + ".jpg')";
-        
-        $("#search_container").css("background-image", bckgndIndex);
-      }, 7000);
-    </script>
+    <script src="js/home.js"></script>
   
   </body>
   
